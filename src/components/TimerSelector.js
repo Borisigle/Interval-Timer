@@ -1,7 +1,7 @@
 import React from 'react';
 import { HStack, VStack, Text, Box, Input } from '@chakra-ui/react';
 
-const TimerSelector = ({ title }) => {
+const TimerSelector = ({ title, sec, setSec, min, setMin }) => {
   const addTime = () => {
     if (parseInt(sec) === 59) {
       setSec('00');

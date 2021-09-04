@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, HStack, Text, VStack, Input } from '@chakra-ui/react';
 import TimerSelector from './TimerSelector';
 
-const Main = () => {
+const Main = ({ setTimer }) => {
   const [set, setSets] = useState(1);
-  const [min, setMin] = useState('00');
-  const [sec, setSec] = useState('00');
+  const [workSecs, setWorkSecs] = useState('00');
+  const [workMin, setWorkMin] = useState('00');
   const [restSecs, setRestSecs] = useState('00');
   const [restMin, setRestMin] = useState('00');
+
+  useEffect(() => {
+    setTimer({
+      sets: set,
+      workTime: { minutes: parseInt(workMin), seconds: parseInt(workSecs) },
+      restTime: { minutes: parseInt(restMin), seconds: parseInt(restSecs) },
+    });
+  }, [set, workSecs, workMin, restSecs, restMin]);
 
   return (
     <Box>
@@ -26,8 +34,20 @@ const Main = () => {
           </Box>
         </HStack>
       </VStack>
-      <TimerSelector title="Work" />
-      <TimerSelector />
+      <TimerSelector
+        title="Work"
+        sec={workSecs}
+        setSec={setWorkSecs}
+        min={workMin}
+        setMin={setWorkMin}
+      />
+      <TimerSelector
+        title="Rest"
+        sec={restSecs}
+        setSec={setRestSecs}
+        min={restMin}
+        setMin={setRestMin}
+      />
     </Box>
   );
 };
